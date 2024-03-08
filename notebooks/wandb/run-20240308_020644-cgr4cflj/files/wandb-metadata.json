@@ -1,0 +1,207 @@
+{
+    "os": "Linux-6.5.0-21-generic-x86_64-with-glibc2.35",
+    "python": "3.10.13",
+    "heartbeatAt": "2024-03-08T08:06:44.655823",
+    "startedAt": "2024-03-08T08:06:44.383428",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "<python with no main file>",
+    "codePathLocal": null,
+    "git": {
+        "remote": "https://github.com/yashas-salankimatt/thesis_working.git",
+        "commit": "aa6f6e0e330e0ff8905d369b873b11862b9295b8"
+    },
+    "email": "yashas.salankimatt@gmail.com",
+    "root": "/home/yashas/Documents/thesis/thesis_working",
+    "host": "4090",
+    "username": "yashas",
+    "executable": "/home/yashas/miniconda3/envs/pytorch_test/bin/python",
+    "cpu_count": 16,
+    "cpu_count_logical": 32,
+    "cpu_freq": {
+        "current": 3372.5931875,
+        "min": 400.0,
+        "max": 5881.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 400.0,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 3136.549,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 400.0,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 5402.118,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 5486.066,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 5479.242,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 5215.072,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 5489.025,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 5274.243,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 4816.58,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 3230.33,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 400.0,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 400.0,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 3109.733,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 3106.307,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 3105.331,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 4738.665,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 400.0,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 3981.328,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 3777.653,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 4669.6,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 5421.764,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 4723.466,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 5485.605,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 4582.285,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 5327.221,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 3497.041,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 4389.3,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 3107.803,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 3112.653,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 400.0,
+            "min": 400.0,
+            "max": 5881.0
+        },
+        {
+            "current": 3084.011,
+            "min": 400.0,
+            "max": 5881.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 3665.956069946289,
+            "used": 615.2062530517578
+        }
+    },
+    "gpu": "NVIDIA GeForce RTX 4090",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce RTX 4090",
+            "memory_total": 25757220864
+        }
+    ],
+    "memory": {
+        "total": 61.91253662109375
+    }
+}
