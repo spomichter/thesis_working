@@ -986,7 +986,7 @@
 				"width": 12.121212121212123,
 				"height": 17.2198172198172,
 				"rotation": 0,
-				"rectanglelabels": ["green_block"],
+				"rectanglelabels": ["yellow_block"],
 				"original_width": 640,
 				"original_height": 480
 			},
@@ -996,7 +996,7 @@
 				"width": 13.924963924963944,
 				"height": 21.067821067821097,
 				"rotation": 0,
-				"rectanglelabels": ["blue_block"],
+				"rectanglelabels": ["green_block"],
 				"original_width": 640,
 				"original_height": 480
 			},
@@ -1228,7 +1228,7 @@
 				"width": 0.9379509379509372,
 				"height": 0.962000962000964,
 				"rotation": 0,
-				"rectanglelabels": ["red_block_center"],
+				"rectanglelabels": ["blue_block_center"],
 				"original_width": 640,
 				"original_height": 480
 			},
@@ -1520,7 +1520,7 @@
 				"width": 13.780663780663774,
 				"height": 18.56661856661857,
 				"rotation": 0,
-				"rectanglelabels": ["blue_block"],
+				"rectanglelabels": ["green_block"],
 				"original_width": 640,
 				"original_height": 480
 			},
@@ -1530,7 +1530,7 @@
 				"width": 7.936507936507945,
 				"height": 15.007215007214983,
 				"rotation": 0,
-				"rectanglelabels": ["red_block"],
+				"rectanglelabels": ["blue_block"],
 				"original_width": 640,
 				"original_height": 480
 			},
@@ -1863,7 +1863,7 @@
 				"width": 0.7936507936507979,
 				"height": 1.5392015392015423,
 				"rotation": 0,
-				"rectanglelabels": ["yellow_block"],
+				"rectanglelabels": ["yellow_block_center"],
 				"original_width": 640,
 				"original_height": 480
 			},
