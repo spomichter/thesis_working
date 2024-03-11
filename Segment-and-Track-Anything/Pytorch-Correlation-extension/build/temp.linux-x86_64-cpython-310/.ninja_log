@@ -1,0 +1,4 @@
+# ninja log v5
+0	8903	1709734024938669192	/home/yashas/Documents/thesis/Segment-and-Track-Anything/Pytorch-Correlation-extension/build/temp.linux-x86_64-cpython-310/Correlation_Module/correlation.o	d45752ee82b3ca31
+0	9308	1709734025346674186	/home/yashas/Documents/thesis/Segment-and-Track-Anything/Pytorch-Correlation-extension/build/temp.linux-x86_64-cpython-310/Correlation_Module/correlation_sampler.o	1dd5aec22bd3b715
+0	12693	1709734028722715531	/home/yashas/Documents/thesis/Segment-and-Track-Anything/Pytorch-Correlation-extension/build/temp.linux-x86_64-cpython-310/Correlation_Module/correlation_cuda_kernel.o	3c628adcd6b4bd31
