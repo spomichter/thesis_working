@@ -238,7 +238,7 @@ def binarize_mask(mask, num):
 
 def binarize_and_preprocess(mask, num):
     mask = binarize_mask(mask, num)
-    mask = get_largest_contiguous(mask)
+    # mask = get_largest_contiguous(mask)
     return mask
 
 
