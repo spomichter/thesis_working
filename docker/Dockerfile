@@ -26,8 +26,24 @@ RUN apt-get update \
     ros-humble-joint-state-publisher \
     ros-humble-joint-trajectory-controller \
     ros-humble-joint-state-broadcaster \
+    iputils-ping \
     net-tools \
+    python3-pip \
+    ros-humble-robot-state-publisher \
+    ros-humble-moveit \
+    ros-humble-rosbridge-suite \
+    ros-humble-joy \
+    ros-humble-ros2-control \
+    ros-humble-ros2-controllers \
+    ros-humble-tf* \
+    ros-humble-gazebo-ros-pkgs \
+    ros-humble-joint-state-publisher \
+    dos2unix \
+    git \
     && rm -rf /var/lib/apt/lists/
+
+RUN pip3 install rospkg numpy==1.24.0 jsonpickle scipy easydict tensorflow matplotlib opencv-python opencv-python-headless pyyaml pyquaternion pybullet keras
+RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 
 ARG USERNAME=ros
 ARG USER_UID=1000
@@ -38,6 +54,13 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && mkdir /home/$USERNAME/.config && chown $USER_UID:$USER_GID /home/$USERNAME/.config
 
 EXPOSE 8765
+EXPOSE 10000
+
+RUN mkdir -p /home/$USERNAME/dev_ws/src && chown -R $USER_UID:$USER_GID /home/$USERNAME/dev_ws
+RUN cd /home/$USERNAME/dev_ws/src && git clone https://github.com/yashas-salankimatt/thesis_ros_ws.git
+RUN cd /home/$USERNAME/dev_ws
+# RUN colcon build
+
 
 # Set up sudo
 RUN apt-get update \
@@ -46,10 +69,13 @@ RUN apt-get update \
     && chmod 0440 /etc/sudoers.d/$USERNAME \
     && rm -rf /var/lib/apt/lists/*
 
+
+
 # Copy the entrypoint and bashrc scripts so we have 
 # our container's environment set up correctly
 COPY entrypoint.sh /entrypoint.sh
 COPY bashrc /home/${USERNAME}/.bashrc
+COPY .tmux.conf /home/${USERNAME}/.tmux.conf
 
 # Set up entrypoint and default command
 ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
