@@ -1,8 +1,13 @@
 FROM osrf/ros:humble-desktop-full
 
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install required packages
 RUN apt-get update \
     && apt-get install -y \
     nano \
+    wget \
+    curl \
     vim \
     git \
     x11-apps \
@@ -39,17 +44,34 @@ RUN apt-get update \
     ros-humble-gazebo-ros-pkgs \
     ros-humble-joint-state-publisher \
     dos2unix \
-    git \
     python3-pip \
     python3-genmsg \
-    && rm -rf /var/lib/apt/lists/
+    && rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install rospkg numpy==1.24.0 jsonpickle scipy easydict matplotlib opencv-python opencv-python-headless pyyaml pyquaternion pybullet
-RUN pip3 install tensorflow keras pybullet
-RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+# Install Python packages
+RUN pip3 install rospkg numpy==1.24.4 jsonpickle scipy easydict matplotlib==3.9.1 opencv-python opencv-python-headless pyyaml pyquaternion pybullet \
+    requests pillow
+RUN pip3 install torch torchvision torchaudio transformers
+
+# Install CUDA (example for CUDA 11.6)
+# RUN apt-get update && apt-get install -y \
+#     cuda-toolkit-12-1 \
+#     && rm -rf /var/lib/apt/lists/*
+# RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.0-1_all.deb
+# RUN dpkg -i cuda-keyring_1.0-1_all.deb
+# RUN apt-get update && apt-get install -y \
+#     cuda \
+#     && rm -rf /var/lib/apt/lists/*
+
+# RUN apt-get update && apt-get -y install cuda-toolkit nvidia-gds \
+#     && rm -rf /var/lib/apt/lists/*
+
+# Set CUDA_HOME environment variable
+ENV CUDA_HOME=/usr/local/cuda-12.1
+ENV PATH=$CUDA_HOME/bin:$PATH
+ENV LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH
 
 ARG USERNAME=ros
-
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
@@ -67,9 +89,14 @@ RUN apt-get update \
     && chmod 0440 /etc/sudoers.d/$USERNAME \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /home/$USERNAME/dev_ws/src && chown -R $USER_UID:$USER_GID /home/$USERNAME/dev_ws
+RUN mkdir -p /home/$USERNAME/dev_ws/src
 RUN cd /home/$USERNAME/dev_ws/src && git clone https://github.com/yashas-salankimatt/thesis_ros_ws.git
+
+RUN mkdir -p /home/$USERNAME/deps
+RUN cd /home/$USERNAME/deps && git clone https://github.com/facebookresearch/segment-anything-2.git
+RUN cd /home/$USERNAME/deps/segment-anything-2 && pip install -e .
 RUN cd /home/$USERNAME/dev_ws
+RUN chown -R $USER_UID:$USER_GID /home/$USERNAME/
 
 # Copy the entrypoint and bashrc scripts so we have 
 # our container's environment set up correctly
