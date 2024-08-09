@@ -69,7 +69,7 @@ RUN pip3 install torch torchvision torchaudio transformers
 # Set CUDA_HOME environment variable
 ENV CUDA_HOME=/usr/local/cuda-12.1
 ENV PATH=$CUDA_HOME/bin:$PATH
-ENV LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH=$CUDA_HOME/lib64
 
 ARG USERNAME=ros
 ARG USER_UID=1000
@@ -95,6 +95,7 @@ RUN cd /home/$USERNAME/dev_ws/src && git clone https://github.com/yashas-salanki
 RUN mkdir -p /home/$USERNAME/deps
 RUN cd /home/$USERNAME/deps && git clone https://github.com/facebookresearch/segment-anything-2.git
 RUN cd /home/$USERNAME/deps/segment-anything-2 && pip install -e .
+RUN cd /home/$USERNAME/deps/segment-anything-2/checkpoints && wget https://dl.fbaipublicfiles.com/segment_anything_2/072824/sam2_hiera_tiny.pt || { echo "Failed to download checkpoint for SAM 2 tiny"; exit 1; }
 RUN cd /home/$USERNAME/dev_ws
 RUN chown -R $USER_UID:$USER_GID /home/$USERNAME/
 
