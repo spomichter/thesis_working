@@ -50,7 +50,7 @@ RUN apt-get update \
 
 # Install Python packages
 RUN pip3 install rospkg numpy==1.24.4 jsonpickle scipy easydict matplotlib==3.9.1 opencv-python opencv-python-headless pyyaml pyquaternion pybullet \
-    requests pillow
+    requests pillow open3d
 RUN pip3 install torch torchvision torchaudio transformers
 
 # Install CUDA (example for CUDA 11.6)
