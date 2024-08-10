@@ -5,6 +5,13 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Install required packages
 RUN apt-get update \
     && apt-get install -y \
+    build-essential \
+    cmake \
+    python3-colcon-common-extensions \
+    python3-flake8 \
+    python3-rosdep \
+    python3-setuptools \
+    python3-vcstool \
     nano \
     wget \
     curl \
@@ -33,20 +40,34 @@ RUN apt-get update \
     ros-humble-joint-state-broadcaster \
     iputils-ping \
     net-tools \
+    htop \
     python3-pip \
-    ros-humble-robot-state-publisher \
-    ros-humble-moveit \
-    ros-humble-rosbridge-suite \
-    ros-humble-joy \
-    ros-humble-ros2-control \
-    ros-humble-ros2-controllers \
     ros-humble-tf* \
     ros-humble-gazebo-ros-pkgs \
-    ros-humble-joint-state-publisher \
     dos2unix \
-    python3-pip \
-    python3-genmsg \
-    && rm -rf /var/lib/apt/lists/*
+    python3-genmsg
+
+# Install moveit2 from source
+# Make sure we have the latest versions of things
+# RUN apt-get upgrade -y \
+#     && rosdep update
+
+# RUN /bin/bash -c "source /opt/ros/humble/setup.bash && mkdir -p /home/ros/ws_moveit2/src && cd /home/ros/ws_moveit2/src && git clone https://github.com/moveit/moveit2.git -b main"
+# # RUN /bin/bash -c "for repo in moveit2/moveit2.repos $(f="moveit2/moveit2_humble.repos"; test -r $f && echo $f); do vcs import < "$repo"; done"
+# RUN /bin/bash -c 'cd /home/ros/ws_moveit2/src && for repo in moveit2/moveit2.repos $(f="moveit2/moveit2_$ROS_DISTRO.repos"; test -r $f && echo $f); do vcs import < "$repo"; done'
+
+# RUN cd /home/ros/ws_moveit2/src && rosdep install -r --from-paths . --ignore-src --rosdistro $ROS_DISTRO -y
+
+# RUN /bin/bash -c "source /opt/ros/humble/setup.bash && cd /home/ros/ws_moveit2 && colcon build --event-handlers desktop_notification- status- --cmake-args -DCMAKE_BUILD_TYPE=Release"
+
+# Does the same thing as above to install moveit py but not by building from source
+# From https://www.reddit.com/r/ROS/comments/18glf0v/moveit2_python_api_interface/
+RUN /bin/bash -c 'echo "deb [trusted=yes] https://raw.githubusercontent.com/moveit/moveit2_packages/jammy-humble/ ./" | sudo tee /etc/apt/sources.list.d/moveit_moveit2_packages.list'
+RUN /bin/bash -c 'echo "yaml https://raw.githubusercontent.com/moveit/moveit2_packages/jammy-humble/local.yaml humble" | sudo tee /etc/ros/rosdep/sources.list.d/1-moveit_moveit2_packages.list'
+RUN apt-get update
+RUN apt-get install -y ros-humble-moveit-py
+RUN apt-get upgrade -y
+
 
 # Install Python packages
 RUN pip3 install rospkg numpy==1.24.4 jsonpickle scipy easydict matplotlib==3.9.1 opencv-python opencv-python-headless pyyaml pyquaternion pybullet \
@@ -56,15 +77,12 @@ RUN pip3 install torch torchvision torchaudio transformers
 # Install CUDA (example for CUDA 11.6)
 # RUN apt-get update && apt-get install -y \
 #     cuda-toolkit-12-1 \
-#     && rm -rf /var/lib/apt/lists/*
 # RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.0-1_all.deb
 # RUN dpkg -i cuda-keyring_1.0-1_all.deb
 # RUN apt-get update && apt-get install -y \
 #     cuda \
-#     && rm -rf /var/lib/apt/lists/*
 
 # RUN apt-get update && apt-get -y install cuda-toolkit nvidia-gds \
-#     && rm -rf /var/lib/apt/lists/*
 
 # Set CUDA_HOME environment variable
 ENV CUDA_HOME=/usr/local/cuda-12.1
@@ -83,11 +101,9 @@ EXPOSE 8765
 EXPOSE 10000
 
 # Set up sudo
-RUN apt-get update \
-    && apt-get install -y sudo \
+RUN apt-get install -y sudo \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME\
-    && chmod 0440 /etc/sudoers.d/$USERNAME \
-    && rm -rf /var/lib/apt/lists/*
+    && chmod 0440 /etc/sudoers.d/$USERNAME
 
 RUN mkdir -p /home/$USERNAME/dev_ws/src
 RUN cd /home/$USERNAME/dev_ws/src && git clone https://github.com/yashas-salankimatt/thesis_ros_ws.git
@@ -106,6 +122,8 @@ COPY bashrc /home/${USERNAME}/.bashrc
 COPY .tmux.conf /home/${USERNAME}/.tmux.conf
 
 RUN /bin/bash -c "source /opt/ros/humble/setup.bash && cd /home/$USERNAME/dev_ws && colcon build"
+
+RUN rm -rf /var/lib/apt/lists/*
 
 # Set up entrypoint and default command
 ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
