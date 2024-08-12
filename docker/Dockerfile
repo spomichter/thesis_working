@@ -141,7 +141,7 @@ ENV PATH=$CUDA_HOME/bin:$PATH
 ENV LD_LIBRARY_PATH=$CUDA_HOME/lib64
 
 ARG USERNAME=ros
-ARG USER_UID=1000
+ARG USER_UID=1001
 ARG USER_GID=$USER_UID
 
 RUN groupadd --gid $USER_GID $USERNAME \
@@ -176,7 +176,7 @@ RUN /bin/bash -c "source /opt/ros/humble/setup.bash && cd /home/$USERNAME/dev_ws
 
 RUN rm -rf /var/lib/apt/lists/*
 
-USER 1000
+USER 1001
 
 # Set up entrypoint and default command
 # ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
