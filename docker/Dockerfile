@@ -113,10 +113,10 @@ RUN apt-get update \
 
 # Does the same thing as above to install moveit py but not by building from source
 # From https://www.reddit.com/r/ROS/comments/18glf0v/moveit2_python_api_interface/
-RUN /bin/bash -c 'echo "deb [trusted=yes] https://raw.githubusercontent.com/moveit/moveit2_packages/jammy-humble/ ./" | sudo tee /etc/apt/sources.list.d/moveit_moveit2_packages.list'
-RUN /bin/bash -c 'echo "yaml https://raw.githubusercontent.com/moveit/moveit2_packages/jammy-humble/local.yaml humble" | sudo tee /etc/ros/rosdep/sources.list.d/1-moveit_moveit2_packages.list'
-RUN apt-get update
-RUN apt-get install -y ros-humble-moveit-py
+# RUN /bin/bash -c 'echo "deb [trusted=yes] https://raw.githubusercontent.com/moveit/moveit2_packages/jammy-humble/ ./" | sudo tee /etc/apt/sources.list.d/moveit_moveit2_packages.list'
+# RUN /bin/bash -c 'echo "yaml https://raw.githubusercontent.com/moveit/moveit2_packages/jammy-humble/local.yaml humble" | sudo tee /etc/ros/rosdep/sources.list.d/1-moveit_moveit2_packages.list'
+# RUN apt-get update
+# RUN apt-get install -y ros-humble-moveit-py
 RUN apt-get upgrade -y
 
 
