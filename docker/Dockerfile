@@ -13,7 +13,7 @@ ENV DISPLAY=:1 \
 EXPOSE $VNC_PORT $NO_VNC_PORT
 
 ### Envrionment config
-ENV VNCHOME=/headless \
+ENV HOME=/headless \
     TERM=xterm \
     STARTUPDIR=/dockerstartup \
     INST_SCRIPTS=/headless/install \
@@ -23,7 +23,7 @@ ENV VNCHOME=/headless \
     VNC_RESOLUTION=1280x1024 \
     VNC_PW=vncpassword \
     VNC_VIEW_ONLY=false
-WORKDIR $VNCHOME
+WORKDIR $HOME
 
 ### Add all install scripts for further steps
 ADD ./src/common/install/ $INST_SCRIPTS/
@@ -46,12 +46,12 @@ RUN $INST_SCRIPTS/firefox.sh
 
 ### Install xfce UI
 RUN $INST_SCRIPTS/xfce_ui.sh
-ADD ./src/common/xfce/ $VNCHOME/
+ADD ./src/common/xfce/ $HOME/
 
 ### configure startup
 RUN $INST_SCRIPTS/libnss_wrapper.sh
 ADD ./src/common/scripts $STARTUPDIR
-RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $VNCHOME
+RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME
 
 ENV HOME=/home/ros
 WORKDIR $HOME
