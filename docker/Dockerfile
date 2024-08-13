@@ -53,9 +53,6 @@ RUN $INST_SCRIPTS/libnss_wrapper.sh
 ADD ./src/common/scripts $STARTUPDIR
 RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME
 
-ENV HOME=/home/ros
-WORKDIR $HOME
-
 # Install required packages
 RUN apt-get update \
     && apt-get install -y \
@@ -143,8 +140,8 @@ ENV CUDA_HOME=/usr/local/cuda-12.1
 ENV PATH=$CUDA_HOME/bin:$PATH
 ENV LD_LIBRARY_PATH=$CUDA_HOME/lib64
 
-ARG USERNAME=ros
-ARG USER_UID=1001
+ARG USERNAME=headless
+ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
 RUN groupadd --gid $USER_GID $USERNAME \
