@@ -1,4 +1,5 @@
-FROM osrf/ros:humble-desktop-full
+# FROM osrf/ros:humble-desktop-full
+FROM ros:humble-perception-jammy
 
 ENV DEBIAN_FRONTEND=noninteractive
 
