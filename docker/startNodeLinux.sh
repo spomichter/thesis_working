@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker run -it \
+docker run -dt \
 --user ros \
 --runtime=nvidia \
 --gpus all \

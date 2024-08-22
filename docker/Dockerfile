@@ -96,7 +96,10 @@ RUN apt-get update \
     ros-humble-tf* \
     ros-humble-gazebo-ros-pkgs \
     dos2unix \
-    python3-genmsg
+    python3-genmsg \
+    gpg \
+    pass \
+    ros-humble-depthai-ros
 
 # Install moveit2 from source
 # Make sure we have the latest versions of things
@@ -119,9 +122,17 @@ RUN apt-get update \
 # RUN apt-get install -y ros-humble-moveit-py
 RUN apt-get upgrade -y
 
+# Set up tmux tpm
+RUN git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+# set up git credential manager
+RUN wget https://github.com/git-ecosystem/git-credential-manager/releases/download/v2.5.1/gcm-linux_amd64.2.5.1.deb
+RUN dpkg -i gcm-linux_amd64.2.5.1.deb
+RUN rm gcm-linux_amd64.2.5.1.deb
+RUN git config --global credential.credentialStore plaintext
 
 # Install Python packages
-RUN pip3 install rospkg numpy==1.24.4 jsonpickle scipy easydict matplotlib==3.9.1 opencv-python opencv-python-headless pyyaml pyquaternion pybullet \
+RUN pip3 install rospkg numpy==1.24.4 jsonpickle scipy easydict matplotlib==3.9.1 opencv-python pyyaml pyquaternion pybullet \
     requests pillow open3d
 RUN pip3 install torch torchvision torchaudio transformers
 
@@ -176,7 +187,7 @@ RUN /bin/bash -c "source /opt/ros/humble/setup.bash && cd /home/$USERNAME/dev_ws
 
 RUN rm -rf /var/lib/apt/lists/*
 
-USER 1001
+USER 1000
 
 # Set up entrypoint and default command
 # ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
