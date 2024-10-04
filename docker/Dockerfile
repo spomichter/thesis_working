@@ -64,6 +64,9 @@ RUN apt-get update \
     python3-rosdep \
     python3-setuptools \
     python3-vcstool \
+    python3-rosinstall \
+    python3-rosinstall-generator \
+    python3-wstool \
     nano \
     wget \
     curl \
@@ -90,6 +93,8 @@ RUN apt-get update \
     ros-humble-joint-state-publisher \
     ros-humble-joint-trajectory-controller \
     ros-humble-joint-state-broadcaster \
+    ros-humble-vision-msgs \
+    ros-humble-ackermann-msgs \
     iputils-ping \
     net-tools \
     htop \
@@ -100,7 +105,8 @@ RUN apt-get update \
     python3-genmsg \
     gpg \
     pass \
-    ros-humble-depthai-ros
+    ros-humble-depthai-ros \
+    zstd
 
 # Install moveit2 from source
 # Make sure we have the latest versions of things
@@ -162,11 +168,15 @@ RUN groupadd --gid $USER_GID $USERNAME \
 
 EXPOSE 8765
 EXPOSE 10000
-
 # Set up sudo
 RUN apt-get install -y sudo \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME\
     && chmod 0440 /etc/sudoers.d/$USERNAME
+
+# RUN wget https://download.stereolabs.com/zedsdk/4.2/cu12/ubuntu22
+RUN cd /home/$USERNAME && git clone https://github.com/isaac-sim/IsaacSim-ros_workspaces.git
+RUN rosdep update
+RUN /bin/bash -c "cd /home/$USERNAME/IsaacSim-ros_workspaces/humble_ws && rosdep install -i --from-path src --rosdistro humble -y"
 
 RUN mkdir -p /home/$USERNAME/dev_ws/src
 RUN cd /home/$USERNAME/dev_ws/src && git clone https://github.com/yashas-salankimatt/thesis_ros_ws.git
@@ -185,6 +195,7 @@ COPY bashrc /home/${USERNAME}/.bashrc
 COPY .tmux.conf /home/${USERNAME}/.tmux.conf
 
 RUN /bin/bash -c "source /opt/ros/humble/setup.bash && cd /home/$USERNAME/dev_ws && colcon build"
+RUN /bin/bash -c "source /opt/ros/humble/setup.bash && cd /home/$USERNAME/IsaacSim-ros_workspaces/humble_ws && colcon build"
 
 RUN rm -rf /var/lib/apt/lists/*
 
