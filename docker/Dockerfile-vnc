@@ -173,8 +173,8 @@ RUN apt-get install -y sudo \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME\
     && chmod 0440 /etc/sudoers.d/$USERNAME
 
-# RUN wget https://stereolabs.sfo2.cdn.digitaloceanspaces.com/zedsdk/4.2/ZED_SDK_Ubuntu22_cuda12.1_v4.2.1.zstd.run && chmod +x ZED_SDK_Ubuntu22_cuda12.1_v4.2.1.zstd.run
-# RUN /bin/bash -c "./ZED_SDK_Ubuntu22_cuda12.1_v4.2.1.zstd.run -- silent skip_cuda"
+RUN wget https://stereolabs.sfo2.cdn.digitaloceanspaces.com/zedsdk/4.2/ZED_SDK_Ubuntu22_cuda12.1_v4.2.1.zstd.run && chmod +x ZED_SDK_Ubuntu22_cuda12.1_v4.2.1.zstd.run
+RUN /bin/bash -c "./ZED_SDK_Ubuntu22_cuda12.1_v4.2.1.zstd.run -- silent skip_cuda"
 
 # RUN wget https://download.stereolabs.com/zedsdk/4.2/cu12/ubuntu22
 RUN cd /home/$USERNAME && git clone https://github.com/isaac-sim/IsaacSim-ros_workspaces.git
@@ -193,8 +193,8 @@ RUN chown -R $USER_UID:$USER_GID /home/$USERNAME/
 
 # Copy the entrypoint and bashrc scripts so we have 
 # our container's environment set up correctly
-COPY entrypoint.sh /entrypoint.sh
 COPY bashrc /home/${USERNAME}/.bashrc
+COPY entrypoint.sh /entrypoint.sh
 COPY .tmux.conf /home/${USERNAME}/.tmux.conf
 
 # RUN /bin/bash -c "source /opt/ros/humble/setup.bash && cd /home/$USERNAME/dev_ws && colcon build"
@@ -205,7 +205,7 @@ RUN rm -rf /var/lib/apt/lists/*
 USER 1000
 
 # Set up entrypoint and default command
-ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
-# ENTRYPOINT ["/dockerstartup/vnc_startup.sh"]
+# ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
+ENTRYPOINT ["/dockerstartup/vnc_startup.sh"]
 # CMD ["bash"]
 CMD ["--wait"]
