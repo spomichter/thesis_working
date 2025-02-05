@@ -3,7 +3,6 @@
 xhost +local:root
 
 docker run -dt \
---user ros \
 --name dim_genesis_cont \
 --runtime=nvidia \
 --gpus all \
