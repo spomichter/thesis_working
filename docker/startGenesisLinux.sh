@@ -2,7 +2,7 @@
 
 xhost +local:root
 
-docker run -dt \
+docker run --rm -it \
 --name dim_genesis_cont \
 --runtime=nvidia \
 --gpus all \
@@ -15,4 +15,4 @@ docker run -dt \
 -v /dev/dri:/dev/dri \
 -v /tmp/.X11-unix/:/tmp/.X11-unix \
 -v $PWD:/workspace \
-genesis_ros bash
+genesis_test_img bash

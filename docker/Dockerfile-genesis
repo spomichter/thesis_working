@@ -100,10 +100,6 @@ ENV LD_LIBRARY_PATH=$CUDA_HOME/lib64
 EXPOSE 8765
 EXPOSE 10000
 
-# Cloning ros ws
-RUN mkdir -p /dev_ws/src
-RUN cd /dev_ws/src && git clone https://github.com/yashas-salankimatt/thesis_ros_ws.git
-
 # # Installing SAM2
 # RUN mkdir -p /deps
 # RUN cd /deps && git clone https://github.com/facebookresearch/segment-anything-2.git
@@ -112,6 +108,7 @@ RUN cd /dev_ws/src && git clone https://github.com/yashas-salankimatt/thesis_ros
 # RUN cd /dev_ws
 # RUN chown -R $USER_UID:$USER_GID /
 
+RUN pip install --upgrade pip setuptools wheel packaging
 # Installing Genesis
 ARG PYTHON_VERSION=3.10
 RUN cd / && git clone https://github.com/dimensionalOS/Genesis.git
@@ -128,8 +125,6 @@ RUN PYTHON_MAJOR_MINOR=$(echo ${PYTHON_VERSION} | tr -d '.') && \
 COPY entrypoint.sh /entrypoint.sh
 COPY bashrc /.bashrc
 COPY .tmux.conf /.tmux.conf
-
-RUN /bin/bash -c "source /opt/ros/humble/setup.bash && cd /dev_ws && colcon build"
 
 RUN rm -rf /var/lib/apt/lists/*
 
