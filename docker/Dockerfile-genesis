@@ -128,6 +128,10 @@ COPY .tmux.conf /.tmux.conf
 
 RUN rm -rf /var/lib/apt/lists/*
 
+COPY 10_nvidia.json /usr/share/glvnd/egl_vendor.d/10_nvidia.json
+COPY nvidia_icd.json /usr/share/vulkan/icd.d/nvidia_icd.json
+COPY nvidia_layers.json /etc/vulkan/implicit_layer.d/nvidia_layers.json
+
 # Set up entrypoint and default command
 ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
 # ENTRYPOINT ["/dockerstartup/vnc_startup.sh"]
